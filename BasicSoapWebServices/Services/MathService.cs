@@ -1,4 +1,7 @@
-﻿namespace BasicSoapWebServices.Models
+﻿using BasicSoapWebServices.DataContracts;
+using BasicSoapWebServices.Interfaces;
+
+namespace BasicSoapWebServices.Services
 {
     public class MathService : IMathService
     {

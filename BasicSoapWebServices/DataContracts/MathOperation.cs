@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BasicSoapWebServices.Models
+namespace BasicSoapWebServices.DataContracts
 {
     [DataContract]
     public class MathOperation

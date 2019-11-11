@@ -1,7 +1,10 @@
-﻿using BasicSoapWebServices.Models;
+﻿using BasicSoapWebServices.Interfaces;
+using BasicSoapWebServices.Models;
+using BasicSoapWebServices.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -22,9 +25,15 @@ namespace BasicSoapWebServices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<PruebasContext>(options =>
+               options.UseSqlServer(connectionString));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSoapCore();
             services.TryAddSingleton<IMathService, MathService>();
+            services.TryAddScoped<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +50,7 @@ namespace BasicSoapWebServices
             }
 
             app.UseSoapEndpoint<IMathService>("/MathService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
+            app.UseSoapEndpoint<IStudentService>("/StudentService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
 
             app.UseHttpsRedirection();
             app.UseMvc();

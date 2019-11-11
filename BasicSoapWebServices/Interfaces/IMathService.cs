@@ -1,6 +1,7 @@
-﻿using System.ServiceModel;
+﻿using BasicSoapWebServices.DataContracts;
+using System.ServiceModel;
 
-namespace BasicSoapWebServices.Models
+namespace BasicSoapWebServices.Interfaces
 {
     [ServiceContract]
     public interface IMathService
